@@ -54,6 +54,7 @@ function App() {
       "https://ai-text-summarizer-cuke.onrender.com/summarize-pdf",
       formData
     );
+    console.log(response.data);
 
     setSummary(response.data.summary);
 
@@ -63,7 +64,7 @@ function App() {
     alert("Error uploading PDF");
 
   } finally {
-
+    console.log("Finished loading");
     setLoading(false);
 
   }
