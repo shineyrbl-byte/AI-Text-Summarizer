@@ -1,17 +1,18 @@
-from transformers import pipeline
+import os
+import requests
 
-summarizer = pipeline(
-    "summarization",
-    model="sshleifer/distilbart-cnn-12-6"
-)
+API_URL = "https://api-inference.huggingface.co/models/sshleifer/distilbart-cnn-12-6"
+
+HF_TOKEN = os.getenv("HF_TOKEN")
+
+headers = {
+    "Authorization": f"Bearer {HF_TOKEN}"
+}
+
 
 def generate_summary(text, length="medium"):
-    print("Selected summary type:", length)
 
-    # Clean extracted text
     text = " ".join(text.split())
-
-    # Limit input size (safe for DistilBART)
     text = text[:2000]
 
     if length == "short":
@@ -24,24 +25,24 @@ def generate_summary(text, length="medium"):
         max_len = 130
         min_len = 70
 
-    print("Length:", length)
-    print("Max:", max_len)
-    print("Min:", min_len)
+    payload = {
+        "inputs": text,
+        "parameters": {
+            "max_length": max_len,
+            "min_length": min_len,
+            "do_sample": False
+        }
+    }
 
-    # Prevent min_length > input length
-    words = len(text.split())
-    if words < min_len:
-        min_len = max(10, words // 2)
-
-    if max_len <= min_len:
-        max_len = min_len + 20
-
-    result = summarizer(
-        text,
-        max_length=max_len,
-        min_length=min_len,
-        do_sample=False,
-        truncation=True
+    response = requests.post(
+        API_URL,
+        headers=headers,
+        json=payload,
+        timeout=120
     )
+
+    response.raise_for_status()
+
+    result = response.json()
 
     return result[0]["summary_text"]
