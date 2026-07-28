@@ -9,6 +9,9 @@ def extract_text_from_pdf(pdf_file):
         extracted = page.extract_text()
 
         if extracted:
-            text += extracted + "\n"
+            text += extracted + " "
+
+    # Remove extra spaces and newlines
+    text = " ".join(text.split())
 
     return text
