@@ -14,7 +14,7 @@ function App() {
     setLoading(true);
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/summarize",
+      "https://ai-text-summarizer-cuke.onrender.com/summarize",
       {
         text: text,
         length: summaryLength
@@ -51,7 +51,7 @@ function App() {
     formData.append("length", summaryLength);
 
     const response = await axios.post(
-      "http://127.0.0.1:8000/summarize-pdf",
+      "https://ai-text-summarizer-cuke.onrender.com/summarize-pdf",
       formData
     );
 
