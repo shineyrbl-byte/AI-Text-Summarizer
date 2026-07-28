@@ -361,6 +361,7 @@ http://localhost:5173
 ## Frontend Deployment
 
 Frontend is deployed using Vercel.
+https://ai-text-summarizer-dun.vercel.app
 
 The deployed frontend provides the user interface for the application.
 
@@ -371,6 +372,8 @@ The application requires the FastAPI backend to be running because:
 * Summarization is performed on the server side.
 * PDF text extraction occurs on the backend.
 * The frontend communicates with backend APIs to generate summaries.
+* https://ai-text-summarizer-cuke.onrender.com/docs
+* https://ai-text-summarizer-cuke.onrender.com
 
 ---
 
